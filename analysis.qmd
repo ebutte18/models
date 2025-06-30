@@ -2,5 +2,19 @@
 title: "Biden Polling"
 format: html
 author: "Eric Butte"
+execute: 
+  echo: false
 ---
+
+```{r}
+#| message: false
+library(tidyverse)
+library(tidymodels)
+library(broom)
+poll_data <- tibble(biden = as.factor(c(rep("Yes", 655), 
+                                        rep("No", 904)))) |> 
+                slice_sample(prop = 1)
+```
+
+The 2024 election pitted Trump vs Biden. Voters would vote Yes or No to Biden. The data was collected from the United States election committee. A potential wekaness in my model is not showing the proper causation for why the citizen decided to vote or not to vote for Biden. 
 
