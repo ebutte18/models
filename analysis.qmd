@@ -11,10 +11,31 @@ execute:
 library(tidyverse)
 library(tidymodels)
 library(broom)
+library(marginaleffects)
 poll_data <- tibble(biden = as.factor(c(rep("Yes", 655), 
                                         rep("No", 904)))) |> 
                 slice_sample(prop = 1)
 ```
 
-The 2024 election pitted Trump vs Biden. Voters would vote Yes or No to Biden. The data was collected from the United States election committee. A potential wekaness in my model is not showing the proper causation for why the citizen decided to vote or not to vote for Biden. 
+
+```{r}
+ggplot(biden, aes(x = 1, y = estimate)) +
+  geom_point(size = 5, color = "midnightblue") +
+  geom_errorbar(aes(ymin = lower, ymax = upper), width = 0.1, color = "midnightblue") +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1), limits = c(0.38, 0.46)) +
+  labs(
+    title = "Support for President Biden in March 2024",
+    subtitle = "42% is not a good sign for an incumbent seeking reelection",
+    caption = "Source: YouGov poll, March 2024."
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.title = element_blank(),
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
+```
+
+
+The 2024 election pitted Trump vs Biden. Voters would vote Yes or No to Biden. The data was collected from the United States election committee. A potential wekaness in my model is not showing the proper causation for why the citizen decided to vote or not to vote for Biden. We model the likelihood of President Biden winning re-election based on how many voters vote for him. This project is interesting because it is able to predict elections based on previous voting trends. 
 
